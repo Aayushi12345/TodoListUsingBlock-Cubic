@@ -120,6 +120,8 @@ class TaskList extends StatelessWidget {
                       BlocProvider.of<TaskCubit>(context)
                           .deleteTask(state.taskList![index]);
                     },
+                    leading: Icon(Icons.delete),
+
                     title: Text(state.taskList[index].name.toString()),
                   );
                 },
