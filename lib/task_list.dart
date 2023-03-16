@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_block/task_cubit.dart';
 import 'task_state.dart';
-import 'task_cubit.dart';
-import 'task.dart';
 
 class TaskList extends StatelessWidget {
   const TaskList({Key? key}) : super(key: key);
@@ -14,7 +12,7 @@ class TaskList extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.green.shade900,
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             showModalBottomSheet(
                 context: context,
@@ -23,7 +21,7 @@ class TaskList extends StatelessWidget {
                         child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Text(
+                        const Text(
                           'Add Task',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -39,22 +37,17 @@ class TaskList extends StatelessWidget {
                           },
                         ),
                         TextButton(
-                          child: Text(
+                          child: const Text(
                             'Add',
                             style: TextStyle(
-                              color: Colors.pink,
-                              backgroundColor: Colors.green
-
-                            ),
+                                color: Colors.pink,
+                                backgroundColor: Colors.green),
                           ),
                           onPressed: () {
                             BlocProvider.of<TaskCubit>(context)
                                 .addTask(newTaskTitle);
                             Navigator.pop(context);
                             // context.read<TaskCubit>().addTask(newTaskTitle);
-
-                            // Provider.of<TaskCubit>(context,listen:false)
-                            //     .addTask
                           },
                         ),
                       ],
@@ -64,24 +57,24 @@ class TaskList extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
                 top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                CircleAvatar(
+                const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 30.0,
                   child: Icon(
                     Icons.list_alt,
                     size: 30.0,
                     color: Colors.green,
                   ),
-                  backgroundColor: Colors.white,
-                  radius: 30.0,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10.0,
                 ),
-                Text(
+                const Text(
                   'Todo',
                   style: TextStyle(
                     color: Colors.white,
@@ -90,8 +83,8 @@ class TaskList extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "${context.watch<TaskCubit>().state.taskList?.length ?? 0}  Tasks",
-                  style: TextStyle(
+                  "${context.watch<TaskCubit>().state.taskList.length ?? 0}  Tasks",
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
                   ),
@@ -103,7 +96,7 @@ class TaskList extends StatelessWidget {
             return Expanded(
                 child: Container(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20.0),
@@ -111,17 +104,15 @@ class TaskList extends StatelessWidget {
                 ),
               ),
               child: ListView.builder(
-                itemCount: state.taskList?.length,
+                itemCount: state.taskList.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     onTap: () {
-                      final task = state.taskList![index].name;
-                      print(task);
+                      final task = state.taskList[index].name;
                       BlocProvider.of<TaskCubit>(context)
-                          .deleteTask(state.taskList![index]);
+                          .deleteTask(state.taskList[index]);
                     },
-                    leading: Icon(Icons.delete),
-
+                    leading: const Icon(Icons.delete),
                     title: Text(state.taskList[index].name.toString()),
                   );
                 },
